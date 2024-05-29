@@ -1,0 +1,29 @@
+name: PR Checklist Re-run check
+on: issue_comment
+
+jobs:
+  pr-approval-checklist-refresh-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get branch of PR commented on
+        uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+
+      - name: Re-run the build step
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "${{ steps.comment-branch.outputs.head_sha }}",
+              check_name: "pr-approval-checklist-build-step"
+            }).then(async (response) => {
+              for (const run of response.data.check_runs) {
+                const result = await github.rest.checks.rerequestSuite({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  check_suite_id: run.check_suite.id
+                });
+              }
+            });
