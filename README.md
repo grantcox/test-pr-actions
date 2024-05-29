@@ -1,0 +1,1 @@
+This repo demonstrates Github actions that require a checklist to be completed (or deleted) before a PR can be merged
