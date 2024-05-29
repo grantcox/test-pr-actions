@@ -12,6 +12,17 @@ jobs:
         uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
 
+      - name: Set the PR's latest commit status to "pending"
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: ${{ steps.comment-branch.outputs.head_sha }},
+              state: "pending",
+            })
+
       - name: Analyze comments, see if all checklists are completed
         uses: mheap/require-checklist-action@v2
         with:
@@ -26,5 +37,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: ${{ steps.comment-branch.outputs.head_sha }},
-              state: job.status,
+              state: ${{ job.status }},
             })
