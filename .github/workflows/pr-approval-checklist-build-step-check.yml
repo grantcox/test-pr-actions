@@ -1,0 +1,13 @@
+name: PR Approval Checklist
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  pr-approval-checklist-build-step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Analyze comments, see if all checklists are completed
+        uses: mheap/require-checklist-action@v2
+        with:
+          requireChecklist: false # If this is true and there are no checklists detected, the action will fail
