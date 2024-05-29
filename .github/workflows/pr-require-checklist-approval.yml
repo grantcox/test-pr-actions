@@ -1,6 +1,8 @@
 name: PR Checklist Completed
 
 on:
+  pull_request_review:
+    types: [created]
   issue_comment:
     types: [created, edited, deleted]
 
@@ -19,7 +21,7 @@ jobs:
             github.rest.issues.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: ${{ steps.comment-branch.outputs.head_sha }},
+              sha: "${{ steps.comment-branch.outputs.head_sha }}",
               state: "pending",
             })
 
@@ -36,6 +38,6 @@ jobs:
             github.rest.issues.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: ${{ steps.comment-branch.outputs.head_sha }},
-              state: ${{ job.status }},
+              sha: "${{ steps.comment-branch.outputs.head_sha }}",
+              state: "${{ job.status }}",
             })
