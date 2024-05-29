@@ -18,7 +18,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.issues.createCommitStatus({
+            github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: "${{ steps.comment-branch.outputs.head_sha }}",
@@ -35,7 +35,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.issues.createCommitStatus({
+            github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: "${{ steps.comment-branch.outputs.head_sha }}",
