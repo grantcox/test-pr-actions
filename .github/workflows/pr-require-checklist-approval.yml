@@ -1,6 +1,9 @@
 name: PR Checklist Completed
 
-on: issue_comment
+on: 
+  issue_comment
+  pull_request:
+    types: [opened, edited]
 
 jobs:
   pr-approval-checklists:
