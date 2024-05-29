@@ -8,7 +8,24 @@ jobs:
   pr-approval-checklists:
     runs-on: ubuntu-latest
     steps:
-      - uses: mheap/require-checklist-action@v2
+      - name: Get branch of PR commented on
+        uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+
+      - name: Analyze comments, see if all checklists are completed
+        uses: mheap/require-checklist-action@v2
         with:
           requireChecklist: false # If this is true and there are no checklists detected, the action will fail
           issueNumber: ${{ github.event.issue.number }}
+
+      - name: Set the PR's latest commit status as ${{ job.status }}
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: steps.comment-branch.outputs.head_sha,
+              state: job.status,
+            })
