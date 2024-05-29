@@ -1,8 +1,6 @@
 name: PR Checklist Completed
 
 on:
-  pull_request:
-    types: [opened, edited]
   issue_comment:
     types: [created, edited, deleted]
 
@@ -22,8 +20,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: "${{ steps.comment-branch.outputs.head_sha }}",
+              context: "PR Approval Checklist",
               state: "pending",
-              description: "Checking PR approval checklist"
             })
 
       - name: Analyze comments, see if all checklists are completed
@@ -41,5 +39,6 @@ jobs:
               repo: context.repo.repo,
               sha: "${{ steps.comment-branch.outputs.head_sha }}",
               state: "${{ job.status }}",
+              context: "PR Approval Checklist",
               description: "PR approval checklist: ${{ job.status }}"
             })
