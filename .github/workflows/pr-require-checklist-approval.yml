@@ -1,8 +1,6 @@
 name: PR Checklist Completed
 
-on:
-  issue_comment:
-    types: [created, edited, deleted]
+on: issue_comment
 
 jobs:
   pr-approval-checklists:
@@ -40,5 +38,5 @@ jobs:
               sha: "${{ steps.comment-branch.outputs.head_sha }}",
               state: "${{ job.status }}",
               context: "PR Approval Checklist",
-              description: "PR approval checklist: ${{ job.status }}"
+              description: "${{ job.status }}" == "failure" ? "Not all checklist items have been completed" : "${{ job.status }}",
             })
