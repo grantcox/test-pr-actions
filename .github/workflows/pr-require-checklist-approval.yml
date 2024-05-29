@@ -16,7 +16,6 @@ jobs:
         uses: mheap/require-checklist-action@v2
         with:
           requireChecklist: false # If this is true and there are no checklists detected, the action will fail
-          issueNumber: ${{ github.event.issue.number }}
 
       - name: Set the PR's latest commit status as ${{ job.status }}
         if: always()
@@ -26,6 +25,6 @@ jobs:
             github.rest.issues.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: steps.comment-branch.outputs.head_sha,
+              sha: ${{ steps.comment-branch.outputs.head_sha }},
               state: job.status,
             })
