@@ -15,5 +15,16 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "**PR Approval Checklist:**\n\nThe following checkboxes must be checked (or strike-through) before the PR can be merged.  These can be done by the PR submitter, or the approver.\n- [ ] PR description has sufficient detail (why are we doing this? where can more context be found?)\n- [ ] Automated regression tests have been added/updated\n- [ ] Manual testing has been performed on the deployed branch\n- [ ] Design review has been requested ([if appropriate](https://app.getguru.com/card/T9p6gRyc/PR-Review-Guideline-Expectations-Process))\n- [ ] QA review has been requested (if appropriate)\n- [ ] Relevant DRIs have been informed\n\nPlease check each boxes above as it is satisfied."
+              body: [
+                  "**PR Approval Checklist:**",
+                  "",
+                  "The following checkboxes must be checked (or strike-through / deleted) before the PR can be merged.  These can be done by the PR submitter, or a reviewer.",
+                  "- [ ] PR description has sufficient detail (why are we doing this? where can more context be found?)",
+                  "- [ ] Automated regression tests have been added/updated",
+                  "- [ ] Manual testing has been performed on the deployed branch",
+                  "- [ ] Design review has been requested ([if appropriate](https://app.getguru.com/card/T9p6gRyc/PR-Review-Guideline-Expectations-Process))",
+                  "- [ ] QA review has been requested (if appropriate)",
+                  "",
+                  "Please check each box above as it is satisfied.",
+              ].join("\n"),
             })
